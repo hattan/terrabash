@@ -3,7 +3,7 @@ Describe "Infra App"
     It 'should have a resource group named terrabash-test'
       When call get_resource_group_by_name "terrabash-test"
       The output should include_name 'terrabash-test'
-      The output should include_location 'eastus'
+      The output should include_location 'westus'
       The output should include_json '.properties.provisioningState' 'Succeeded'
       The status should eq 0
     End     
