@@ -10,7 +10,7 @@ Describe "Infra App"
 
     It 'should not have a resource group named foo'
       When call run_az "az group show -g foo -o json"
-      The error should equal "ERROR: Resource group 'foo' could not be found."
+      The error should include "Resource group 'foo' could not be found."
       The status should eq 3
     End         
   End
