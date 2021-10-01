@@ -10,20 +10,28 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
-- script: |
-    curl -fsSL https://git.io/shellspec | sh -s -- --yes
+- task: AzureCLI@2
   displayName: 'Install Shellspec'
+  inputs:
+    azureSubscription: 'hashobok'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      curl -fsSL https://git.io/shellspec | sh -s -- --yes
 
 - script: echo "Deploy"
   displayName: 'Terraform Deploy'
 
-- script: |
-    shellspec -f d
-    shellspec -f j > tests.xml
-  displayName: 'Run Tests'
-  workingDirectory: test
-
+- task: AzureCLI@2
+  displayName: 'Run Infrastructure Tests'
+  inputs:
+    workingDirectory: test
+    azureSubscription: 'hashobok'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      shellspec -f d
+      shellspec -f j > tests.xml
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
