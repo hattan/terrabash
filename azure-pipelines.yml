@@ -18,6 +18,8 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      az login --scope https://management.core.windows.net//.default
+
 
 - script: echo "Deploy"
   displayName: 'Terraform Deploy'
@@ -32,6 +34,7 @@ steps:
     inlineScript: |
       shellspec -f d
       shellspec -f j > tests.xml
+
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
