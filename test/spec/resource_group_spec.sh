@@ -6,7 +6,13 @@ Describe "Infra App"
       The output should include_location 'westus'
       The output should include_json '.properties.provisioningState' 'Succeeded'
       The status should eq 0
-    End      
+    End     
+
+    It 'should have a provisioningState of Succeeded'
+      When call get_resource_group_by_name "terrabash-test"
+      The output should include_json '.properties.provisioningState' 'Succeeded'
+      The status should eq 0
+    End           
 
     It 'should not have a resource group named foo'
       When call run_az "az group show -g foo -o json"

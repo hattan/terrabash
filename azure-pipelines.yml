@@ -11,6 +11,7 @@ pool:
 
 steps:
 - task: AzureCLI@2
+  displayName: Install Shellspec
   inputs:
     azureSubscription: 'hashobok'
     scriptType: 'bash'
@@ -23,6 +24,7 @@ steps:
   displayName: 'Terraform Deploy'
 
 - task: AzureCLI@2
+  displayName: Run Infrastructure Tests
   inputs:
     workingDirectory: test
     azureSubscription: 'hashobok'
