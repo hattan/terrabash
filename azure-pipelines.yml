@@ -10,10 +10,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
+- script: |
+    wget -O- https://git.io/shellspec | sh
+  displayName: 'Install Shellspec'
+
 - script: echo "Deploy"
   displayName: 'Terraform Deploy'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    shellspec
+  displayName: 'Run Tests'
+  workingDirectory: spec
