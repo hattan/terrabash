@@ -22,3 +22,58 @@ run_az() {
   fi
   return $code
 }
+
+# Assertions
+query_equals() {
+  local query="$1"
+  local expected="$2"
+  local json="$query_equals"
+  if [[ "$#" > 2 ]]; then
+    json="$3"
+  fi
+  local actual=$(echo "$json" | jq -r "$query")
+
+  if [[ "$actual" == "$expected" ]]; then
+    return 0
+  else    
+    new_line
+    error "   query: $query"
+    error "expected: $expected"
+    error "  actual: $actual"
+    return 1
+  fi
+}
+
+name_equals() {
+  local expected="$1"
+  local json="$name_equals"
+  query_equals ".name" "$expected" "$json"
+}
+
+location_equals() {
+  local expected="$1"
+  local json="$location_equals"
+  query_equals ".location" "$expected" "$json"
+}
+
+
+# LOGGER functions
+error() {
+    printf "\e[31mERROR: $@\n\e[0m"
+}
+
+information() {
+    printf "  \e[36m$@\n\e[0m"
+}
+
+success() {
+    printf "  \e[32m$@\n\e[0m"
+}
+
+clear_print_log() {
+    rm -f logs/log.txt
+}
+
+new_line() {
+  echo -e "\n"
+}
