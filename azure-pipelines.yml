@@ -11,21 +11,18 @@ pool:
 
 steps:
 - task: AzureCLI@2
-  displayName: 'Install Shellspec'
   inputs:
     azureSubscription: 'hashobok'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       curl -fsSL https://git.io/shellspec | sh -s -- --yes
-      az login --scope https://management.core.windows.net//.default
 
 
 - script: echo "Deploy"
   displayName: 'Terraform Deploy'
 
 - task: AzureCLI@2
-  displayName: 'Run Infrastructure Tests'
   inputs:
     workingDirectory: test
     azureSubscription: 'hashobok'
@@ -38,6 +35,6 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '**/test.xml'
+    testResultsFiles: '**/tests.xml'
     searchFolder: '$(System.DefaultWorkingDirectory)/test'
     testRunTitle: 'Infrastructure Tests'
