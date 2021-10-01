@@ -19,6 +19,14 @@ steps:
   displayName: 'Terraform Deploy'
 
 - script: |
-    shellspec
+    shellspec -f d
+    shellspec -f j > tests.xml
   displayName: 'Run Tests'
-  workingDirectory: spec
+  workingDirectory: test
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/test'
+    testRunTitle: 'Infrastructure Tests'
