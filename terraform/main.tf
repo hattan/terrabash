@@ -16,8 +16,8 @@ provider "azurerm" {
 
 # Create a resource group
 resource "azurerm_resource_group" "example" {
-  name     = "terrabash-test"
-  location = "West US"
+  name     = var.example_rg_name
+  location = var.example_rg_location
 }
 
 resource "azurerm_resource_group" "second" {
