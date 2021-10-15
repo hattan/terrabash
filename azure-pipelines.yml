@@ -35,7 +35,7 @@ steps:
       shellspec -f j > tests.xml
 
 - task: PublishTestResults@2
-  condition: always()
+  continueOnError: 
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/tests.xml'

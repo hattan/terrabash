@@ -12,10 +12,15 @@ get_resource_group_by_name() {
   run_az "az group show -g $resourceGroupName -o json"
 }
 
+get_storage_account_by_name() {
+  storageAccountName=$1
+   run_az "az storage account show -n $storageAccountName"
+}
 # AZ CLI functions
 run_az() {
   command=$1
   json=$(exec $command)        
+  echo $json
   local code=$?
   if [[ ! -z "$json" ]]; then
     echo "$json"
@@ -55,7 +60,6 @@ location_equals() {
   local json="$location_equals"
   query_equals ".location" "$expected" "$json"
 }
-
 
 # LOGGER functions
 error() {

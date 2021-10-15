@@ -1,0 +1,2 @@
+second_resource_group_name="terrabash2"
+second_resource_group_location="westus"
